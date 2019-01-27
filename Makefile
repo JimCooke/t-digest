@@ -6,9 +6,10 @@ TRIGGER := $(shell grep tdigest ${HOME}/.git-triggers | cut -f2 -d '=')
 PROJECT := "10554030"
 VERSION := $(shell cat VERSION)
 
+compile:  CMD := "cat Cargo.toml | sed 's/version =.*/version = \"${VERSION}\"/' > Cargo.toml.new" 
 compile: lint
 	./scripts/version.sh patch
-	cat Cargo.toml | sed 's/version =.*/version = "1.0.1"/' > Cargo.toml.new
+	eval ${CMD}
 	mv Cargo.toml.new Cargo.toml
 	cargo build --release
 
@@ -41,7 +42,7 @@ test-data:
           mkdir centroids; \
         fi
 
-build: darwin linux
+build: darwin linux 
 	git add -A
 	git commit -m "Make build ${VERSION}"
 	git pull origin master
@@ -92,7 +93,6 @@ test: downloaddir stagedir
 	  --form token=${TRIGGER} \
 	  --form ref=master \
 	  --form "variables[STAGE]=test" \
-	  https://gitlab.com/api/v4/projects/${PROJECT}/trigger/pipeline
 
 release : downloaddir stagedir
 	curl --request POST \
@@ -112,8 +112,8 @@ clean:
 	rm -rf target rc data centroids 
 
 downloaddir:
-	if [ ! -d downloads ]; then \
-	  mkdir downloads; \
+	if [ ! -d releases ]; then \
+	  mkdir releases; \
 	fi
 
 stagedir:
