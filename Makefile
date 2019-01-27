@@ -8,7 +8,7 @@ VERSION := $(shell cat VERSION)
 
 compile: lint
 	./scripts/version.sh patch
-	cat Cargo.toml | sed 's/version =.*/version = "1.0.1"/' > Cargo.toml.new
+	CMD="cat Cargo.toml | sed 's/version =.*/version = \"${VERSION}\"/' > Cargo.toml.new"
 	mv Cargo.toml.new Cargo.toml
 	cargo build --release
 
@@ -100,6 +100,7 @@ release : downloaddir stagedir
 	  --form ref=master \
 	  --form "variables[STAGE]=release" \
 	  https://gitlab.com/api/v4/projects/${PROJECT}/trigger/pipeline
+	echo "${PWD}/scripts/git-pull.sh ${PWD}"  | at now + 5 minutes
 
 push : downloaddir stagedir
 	curl --request POST \
@@ -107,6 +108,7 @@ push : downloaddir stagedir
 	  --form ref=master \
 	  --form "variables[STAGE]=push" \
 	  https://gitlab.com/api/v4/projects/${PROJECT}/trigger/pipeline
+	echo "${PWD}/scripts/git-pull.sh ${PWD}"  | at now + 5 minutes
 
 clean:
 	rm -rf target rc data centroids 
