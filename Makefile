@@ -42,7 +42,7 @@ test-data:
           mkdir centroids; \
         fi
 
-build: darwin 
+build: darwin linux 
 	git add -A
 	git commit -m "Make build ${VERSION}"
 	git pull origin master
@@ -115,8 +115,8 @@ clean:
 	rm -rf target rc data centroids 
 
 downloaddir:
-	if [ ! -d downloads ]; then \
-	  mkdir downloads; \
+	if [ ! -d releases ]; then \
+	  mkdir releases; \
 	fi
 
 stagedir:

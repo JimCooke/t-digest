@@ -6,16 +6,16 @@ if [ $FILES_TO_MOVE -gt 0 ]; then
   git config --global user.email 'jim.cooke.aus@gmail.com'
   git config --global user.name 'jimcooke'
   git remote set-url origin https://${GIT_CI_USER}:${GIT_CI_PASS}@gitlab.com/${GIT_CI_PROJECT_PATH}.git
-  git clone https://${GIT_CI_USER}:${GIT_CI_PASS}@gitlab.com/${GIT_CI_PROJECT_PATH}.git &> /dev/null
+  git clone https://${GIT_CI_USER}:${GIT_CI_PASS}@gitlab.com/${GIT_CI_PROJECT_PATH}.git
   cd ${GIT_CI_ROOT}
 
   # We need to remove any old patch versions for this <upgrade>.<feature> version
   FEATURE_VERSION=$(cat VERSION | cut -f1-2 -d '.')
   PACKAGE=$(grep -m1 name Cargo.toml | cut -f2 -d '=' | tr -d ' "')
-  rm -f downloads/${PACKAGE}_${FEATURE_VERSION}*
+  rm -f releases/${PACKAGE}_${FEATURE_VERSION}*
 
-  # Move the new binary from staging to /downloads as a release
-  mv staging/* downloads/
+  # Move the new binary from staging to /releases as a release
+  mv staging/* releases/
   rm -f .VERSION_BACKUP
   git add --all
   git commit -m "GitLab Runner Push"
