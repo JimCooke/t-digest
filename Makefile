@@ -42,7 +42,7 @@ test-data:
           mkdir centroids; \
         fi
 
-build: darwin linux
+build: darwin 
 	git add -A
 	git commit -m "Make build ${VERSION}"
 	git pull origin master
