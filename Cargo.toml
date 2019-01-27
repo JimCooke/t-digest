@@ -1,6 +1,6 @@
 [package]
 name = "tdigest"
-version = "1.0.1"
+version = "1.0.0"
 authors = ["Jim Cooke <jim.cooke.aus@gmail.com>"]
 
 [lib]

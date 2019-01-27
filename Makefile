@@ -6,9 +6,10 @@ TRIGGER := $(shell grep tdigest ${HOME}/.git-triggers | cut -f2 -d '=')
 PROJECT := "10554030"
 VERSION := $(shell cat VERSION)
 
+compile:  CMD := "cat Cargo.toml | sed 's/version =.*/version = \"${VERSION}\"/' > Cargo.toml.new" 
 compile: lint
 	./scripts/version.sh patch
-	CMD="cat Cargo.toml | sed 's/version =.*/version = \"${VERSION}\"/' > Cargo.toml.new"
+	eval ${CMD}
 	mv Cargo.toml.new Cargo.toml
 	cargo build --release
 
