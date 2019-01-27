@@ -15,6 +15,9 @@ if [ $FILES_TO_MOVE -gt 0 ]; then
   rm -f releases/${PACKAGE}_${FEATURE_VERSION}*
 
   # Move the new binary from staging to /releases as a release
+  if [ ! -d releases ]; then 
+    mkdir releases
+  fi
   mv staging/* releases/
   rm -f .VERSION_BACKUP
   git add --all
