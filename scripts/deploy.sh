@@ -14,7 +14,7 @@ if [ $FILES_TO_MOVE -gt 0 ]; then
   PACKAGE=$(grep -m1 name Cargo.toml | cut -f2 -d '=' | tr -d ' "')
   rm -f downloads/${PACKAGE}_${FEATURE_VERSION}*
 
-  # Move the new binary from staging to /bin as a release
+  # Move the new binary from staging to /downloads as a release
   mv staging/* downloads/
   rm -f .VERSION_BACKUP
   git add --all
