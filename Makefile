@@ -93,7 +93,6 @@ test: downloaddir stagedir
 	  --form token=${TRIGGER} \
 	  --form ref=master \
 	  --form "variables[STAGE]=test" \
-	  https://gitlab.com/api/v4/projects/${PROJECT}/trigger/pipeline
 
 release : downloaddir stagedir
 	curl --request POST \
@@ -101,7 +100,6 @@ release : downloaddir stagedir
 	  --form ref=master \
 	  --form "variables[STAGE]=release" \
 	  https://gitlab.com/api/v4/projects/${PROJECT}/trigger/pipeline
-	echo "${PWD}/scripts/git-pull.sh ${PWD}"  | at now + 5 minutes
 
 push : downloaddir stagedir
 	curl --request POST \
@@ -109,7 +107,6 @@ push : downloaddir stagedir
 	  --form ref=master \
 	  --form "variables[STAGE]=push" \
 	  https://gitlab.com/api/v4/projects/${PROJECT}/trigger/pipeline
-	echo "${PWD}/scripts/git-pull.sh ${PWD}"  | at now + 5 minutes
 
 clean:
 	rm -rf target rc data centroids 
