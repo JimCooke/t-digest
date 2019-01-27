@@ -1,0 +1,14 @@
+[package]
+name = "tdigest"
+version = "1.0.1"
+authors = ["Jim Cooke <jim.cooke.aus@gmail.com>"]
+
+[lib]
+name = "tdigest"
+
+[[bin]]
+name = "tdigest"
+
+[dependencies]
+quickersort = "3.0"
+serde_json = "1.0"

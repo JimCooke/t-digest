@@ -1,0 +1,24 @@
+image: ubuntu:latest
+
+# Project-level variables can be added by going to your project’s Settings > CI/CD, then finding the section called Variables.
+# Group variables are found in a similar way
+
+stages:
+  - test 
+  - deploy
+
+integration_tests:
+  only:
+    - triggers
+  stage: test
+  script:
+    - if [ "${STAGE}" == "test" ]; then sh scripts/integration_test.sh; fi
+    - if [ "${STAGE}" == "push" ]; then sh scripts/integration_test.sh; fi
+
+deployment:
+  only:
+    - triggers
+  stage: deploy
+  script:
+    - if [ "${STAGE}" == "release" ]; then sh scripts/deploy.sh; fi
+    - if [ "${STAGE}" == "push" ]; then sh scripts/deploy.sh; fi
